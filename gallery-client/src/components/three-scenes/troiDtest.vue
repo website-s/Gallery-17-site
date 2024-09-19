@@ -1,67 +1,158 @@
 <template>
-    <div ref="sceneContainer" style="width: 100%; height: 100vh;"></div>
-  </template>
-  
-  <script>
-  import * as THREE from 'three'
-  
-  export default {
-    name: 'ThreeScene',
-    mounted() {
-      this.initThreeJS()
-    },
-    methods: {
-      initThreeJS() {
-        // Créer la scène
-        const scene = new THREE.Scene()
-  
-        // Créer la caméra (fov, aspect ratio, near, far)
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-        camera.position.z = 5
-  
-        // Créer le renderer et attacher à l'élément DOM
-        const renderer = new THREE.WebGLRenderer()
-        renderer.setSize(window.innerWidth, window.innerHeight)
-        this.$refs.sceneContainer.appendChild(renderer.domElement)
-  
-        // Créer un cube
-        const geometry = new THREE.BoxGeometry()
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-        const cube = new THREE.Mesh(geometry, material)
-        scene.add(cube)
-  
-        // Fonction pour rendre la scène
-        const animate = function () {
-          requestAnimationFrame(animate)
-  
-          // Faire tourner le cube
-          cube.rotation.x += 0.01
-          cube.rotation.y += 0.01
-  
-          // Rendu de la scène
-          renderer.render(scene, camera)
-        }
-  
-        animate()
-  
-        // Gestion du redimensionnement de la fenêtre
-        window.addEventListener('resize', () => {
-          const width = window.innerWidth
-          const height = window.innerHeight
-          renderer.setSize(width, height)
-          camera.aspect = width / height
-          camera.updateProjectionMatrix()
-        })
-      }
+  <div ref="sceneContainer" style="width: 100%; height: 100vh;">
+    <canvas class="webgl"></canvas>
+  </div>
+</template>
+
+<script>
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import * as dat from 'dat.gui'
+import { onBeforeUnmount } from 'vue'
+
+export default {
+  mounted() {
+    /**
+     * Base
+     */
+    const gui = new dat.GUI()
+
+    // Canvas
+    const canvas = this.$el.querySelector('canvas.webgl')
+
+    // Scene
+    const scene = new THREE.Scene()
+
+
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.setDecoderPath(' ../assets/draco ')
+
+    const gltfloader = new GLTFLoader()
+    gltfloader.setDRACOLoader(dracoLoader)
+
+    gltfloader.load()
+    
+    /**
+     * Floor
+     */
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(10, 10),
+      new THREE.MeshStandardMaterial({
+        color: '#444444',
+        metalness: 0,
+        roughness: 0.5
+      })
+    )
+    floor.receiveShadow = true
+    floor.rotation.x = -Math.PI * 0.5
+    scene.add(floor)
+
+    /**
+     * Lights
+     */
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.4)
+    scene.add(ambientLight)
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
+    directionalLight.castShadow = true
+    directionalLight.shadow.mapSize.set(1024, 1024)
+    directionalLight.shadow.camera.far = 15
+    directionalLight.shadow.camera.left = -7
+    directionalLight.shadow.camera.top = 7
+    directionalLight.shadow.camera.right = 7
+    directionalLight.shadow.camera.bottom = -7
+    directionalLight.position.set(5, 5, 5)
+    scene.add(directionalLight)
+
+    /**
+     * Sizes
+     */
+    const sizes = {
+      width: window.innerWidth,
+      height: window.innerHeight
     }
+
+    window.addEventListener('resize', () => {
+      // Update sizes
+      sizes.width = window.innerWidth
+      sizes.height = window.innerHeight
+
+      // Update camera
+      camera.aspect = sizes.width / sizes.height
+      camera.updateProjectionMatrix()
+
+      // Update renderer
+      renderer.setSize(sizes.width, sizes.height)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    })
+
+    /**
+     * Camera
+     */
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+    camera.position.set(2, 2, 2)
+    scene.add(camera)
+
+    // Controls
+    const controls = new OrbitControls(camera, canvas)
+    controls.target.set(0, 0.75, 0)
+    controls.enableDamping = true
+
+    /**
+     * Renderer
+     */
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true
+    })
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    /**
+     * Animate
+     */
+    const clock = new THREE.Clock()
+
+    // Log clock to avoid the unused variable error
+    console.log(clock)
+
+    const tick = () => {
+      // Update controls
+      controls.update()
+
+      // Render
+      renderer.render(scene, camera)
+
+      // Call tick again on the next frame
+      window.requestAnimationFrame(tick)
+    }
+
+    tick()
+
+    // Clean up on unmount using Vue 3's lifecycle hook
+    onBeforeUnmount(() => {
+      gui.destroy()
+      renderer.dispose()
+      window.removeEventListener('resize', () => {})
+    })
   }
-  </script>
-  
-  <style scoped>
-  /* Optionnel : ajuster la taille du conteneur pour occuper tout l'écran */
-  div {
-    display: block;
-    margin: 0;
-    padding: 0;
-  }
-  </style>
+}
+</script>
+
+<style scoped>
+/* Optionnel : ajuster la taille du conteneur pour occuper tout l'écran */
+div {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+</style>
