@@ -25,29 +25,20 @@ export default {
     // Scene
     const scene = new THREE.Scene()
 
-
     const dracoLoader = new DRACOLoader()
-    dracoLoader.setDecoderPath(' ../assets/draco ')
+    dracoLoader.setDecoderPath('/draco/')
 
     const gltfloader = new GLTFLoader()
     gltfloader.setDRACOLoader(dracoLoader)
+    console.log(dracoLoader);
 
-    gltfloader.load()
-    
-    /**
-     * Floor
-     */
-    const floor = new THREE.Mesh(
-      new THREE.PlaneGeometry(10, 10),
-      new THREE.MeshStandardMaterial({
-        color: '#444444',
-        metalness: 0,
-        roughness: 0.5
-      })
+    gltfloader.load(
+      '/piece/piece.gltf',
+      (gltf) => {
+        scene.add(gltf.scene)
+      }
     )
-    floor.receiveShadow = true
-    floor.rotation.x = -Math.PI * 0.5
-    scene.add(floor)
+
 
     /**
      * Lights
