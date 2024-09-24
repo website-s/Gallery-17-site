@@ -10,6 +10,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import * as dat from 'dat.gui'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { onBeforeUnmount } from 'vue'
 
 export default {
@@ -25,44 +26,75 @@ export default {
     // Scene
     const scene = new THREE.Scene()
 
+    // Draco and GLTF Loader
     const dracoLoader = new DRACOLoader()
     dracoLoader.setDecoderPath('/draco/')
 
     const gltfloader = new GLTFLoader()
     gltfloader.setDRACOLoader(dracoLoader)
-    console.log(dracoLoader);
 
-    gltfloader.load(
-      '/piece/piece.gltf',
-      (gltf) => {
-        scene.add(gltf.scene)
-      }
-    )
-
+    gltfloader.load('/pieceentiere/pieceentiere.gltf', (gltf) => {
+      scene.add(gltf.scene)
+    })
 
     /**
      * Lights
      */
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.4)
+
+    // Ambient light for soft global illumination
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
     scene.add(ambientLight)
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
-    directionalLight.castShadow = true
-    directionalLight.shadow.mapSize.set(1024, 1024)
-    directionalLight.shadow.camera.far = 15
-    directionalLight.shadow.camera.left = -7
-    directionalLight.shadow.camera.top = 7
-    directionalLight.shadow.camera.right = 7
-    directionalLight.shadow.camera.bottom = -7
-    directionalLight.position.set(5, 5, 5)
-    scene.add(directionalLight)
+    // Directional light (simulate sunlight)
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.5)
+    sunLight.position.set(5, 10, 5) // Position high up and angled
+    sunLight.castShadow = true
+    scene.add(sunLight)
+
+    // Sunlight shadow properties
+    sunLight.shadow.mapSize.width = 1024
+    sunLight.shadow.mapSize.height = 1024
+    sunLight.shadow.camera.near = 0.5
+    sunLight.shadow.camera.far = 50
+
+    // Optional: Add a helper to visualize the sunlight direction
+    const sunLightHelper = new THREE.DirectionalLightHelper(sunLight)
+    scene.add(sunLightHelper)
+
+    // GUI controls for sunlight
+    const sunLightFolder = gui.addFolder('Sun Light')
+    const sunLightPosition = {
+      x: sunLight.position.x,
+      y: sunLight.position.y,
+      z: sunLight.position.z
+    }
+
+    sunLightFolder.add(sunLightPosition, 'x').min(-10).max(10).step(0.1).onChange(() => {
+      sunLight.position.x = sunLightPosition.x
+    })
+    sunLightFolder.add(sunLightPosition, 'y').min(-10).max(10).step(0.1).onChange(() => {
+      sunLight.position.y = sunLightPosition.y
+    })
+    sunLightFolder.add(sunLightPosition, 'z').min(-10).max(10).step(0.1).onChange(() => {
+      sunLight.position.z = sunLightPosition.z
+    })
+
+    /**
+     * Load HDRI (environment map)
+     */
+    const rgbeLoader = new RGBELoader()
+    rgbeLoader.load('/hdr/hdr.hdr', (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping
+      scene.environment = texture // Set the HDRI as environment for reflections
+      scene.background = texture  // Optional: Set as the scene background
+    })
 
     /**
      * Sizes
      */
     const sizes = {
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     }
 
     window.addEventListener('resize', () => {
@@ -96,8 +128,11 @@ export default {
      */
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
-      antialias: true
+      antialias: true,
     })
+
+    // Enable physical lights for realism
+    renderer.physicallyCorrectLights = true
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
     renderer.setSize(sizes.width, sizes.height)
@@ -106,11 +141,6 @@ export default {
     /**
      * Animate
      */
-    const clock = new THREE.Clock()
-
-    // Log clock to avoid the unused variable error
-    console.log(clock)
-
     const tick = () => {
       // Update controls
       controls.update()
@@ -130,12 +160,11 @@ export default {
       renderer.dispose()
       window.removeEventListener('resize', () => {})
     })
-  }
+  },
 }
 </script>
 
 <style scoped>
-/* Optionnel : ajuster la taille du conteneur pour occuper tout l'écran */
 div {
   display: block;
   margin: 0;
