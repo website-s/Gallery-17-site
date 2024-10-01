@@ -1,11 +1,12 @@
 <template>
-<div>test</div>
-<ThreeScene />
+<!-- <ThreeScene /> -->
+ <HeaderHome/>
 </template>
 
 
 <script setup>
-import ThreeScene from '../components/three-scenes/troiDtest.vue'
+// import ThreeScene from '../components/three-scenes/troiDtest.vue'
+import HeaderHome from '../components/HomeHeader.vue'
 </script>
 <script>
 
