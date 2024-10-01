@@ -1,0 +1,20 @@
+[
+    {
+        "sous-titre": "coucou",
+        "titre": "gros",
+        "texte": "hamood",
+        "background": "hipppo.webp"
+    },
+    {
+        "sous-titre": "coucou1",
+        "titre": "gros1",
+        "texte": "hamood1",
+        "background": "hipppo.webp"
+    },
+    {
+        "sous-titre": "coucou2",
+        "titre": "gros2",
+        "texte": "hamood2",
+        "background": "hipppo.webp"
+    }
+]

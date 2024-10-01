@@ -33,7 +33,7 @@ export default {
     const gltfloader = new GLTFLoader()
     gltfloader.setDRACOLoader(dracoLoader)
 
-    gltfloader.load('/pieceentiere/pieceentiere.gltf', (gltf) => {
+    gltfloader.load('/arche/gltf/arche.gltf', (gltf) => {
       scene.add(gltf.scene)
     })
 
@@ -42,42 +42,8 @@ export default {
      */
 
     // Ambient light for soft global illumination
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
     scene.add(ambientLight)
-
-    // Directional light (simulate sunlight)
-    const sunLight = new THREE.DirectionalLight(0xffffff, 1.5)
-    sunLight.position.set(5, 10, 5) // Position high up and angled
-    sunLight.castShadow = true
-    scene.add(sunLight)
-
-    // Sunlight shadow properties
-    sunLight.shadow.mapSize.width = 1024
-    sunLight.shadow.mapSize.height = 1024
-    sunLight.shadow.camera.near = 0.5
-    sunLight.shadow.camera.far = 50
-
-    // Optional: Add a helper to visualize the sunlight direction
-    const sunLightHelper = new THREE.DirectionalLightHelper(sunLight)
-    scene.add(sunLightHelper)
-
-    // GUI controls for sunlight
-    const sunLightFolder = gui.addFolder('Sun Light')
-    const sunLightPosition = {
-      x: sunLight.position.x,
-      y: sunLight.position.y,
-      z: sunLight.position.z
-    }
-
-    sunLightFolder.add(sunLightPosition, 'x').min(-10).max(10).step(0.1).onChange(() => {
-      sunLight.position.x = sunLightPosition.x
-    })
-    sunLightFolder.add(sunLightPosition, 'y').min(-10).max(10).step(0.1).onChange(() => {
-      sunLight.position.y = sunLightPosition.y
-    })
-    sunLightFolder.add(sunLightPosition, 'z').min(-10).max(10).step(0.1).onChange(() => {
-      sunLight.position.z = sunLightPosition.z
-    })
 
     /**
      * Load HDRI (environment map)
@@ -131,10 +97,22 @@ export default {
       antialias: true,
     })
 
-    // Enable physical lights for realism
-    renderer.physicallyCorrectLights = true
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 1
+
+    gui.add(renderer, 'toneMapping', {
+      No: THREE.NoToneMapping,
+      Linear: THREE.LinearToneMapping,
+      Reihnard: THREE.ReinhardToneMapping,
+      Cineon: THREE.CineonToneMapping,
+      ACESFilmic : THREE.ACESFilmicToneMapping
+    })
+    gui.add(renderer, 'toneMappingExposure').min(0).max(10).step(0.001)
+
+    // // Enable physical lights for realism
+    // renderer.physicallyCorrectLights = true
+    // renderer.shadowMap.enabled = true
+    // renderer.shadowMap.type = THREE.PCFSoftShadowMap
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
