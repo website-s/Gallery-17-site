@@ -1,9 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
-    color: red;
     margin: 0;
     padding: 0;
 }
 
-body {
+body, 
+html {
     overflow-x: hidden;
+    font-size: 20px;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 570;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+a {
+    font-weight: 580;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #00000000;
+    transition: .3s;
+}
+
+a > * {
+    transition: .3s;
+}
+
+a:hover, 
+a:hover > * {
+    color: #fff;
+}
+
+a:hover {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #fff;
 }

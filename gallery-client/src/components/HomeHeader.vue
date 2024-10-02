@@ -1,9 +1,19 @@
 <template>
   <header class="home-header">
       <div class="slider-component" :style="{ backgroundImage: 'url(' + require(`@/assets/${item.background}`) + ')' }" v-for="(item, index) in HeaderContent" :key="index">
-        <h2>{{ item['sous-titre'] }}</h2> <!-- Affichage du sous-titre -->
-        <h3>{{ item['titre'] }}</h3>        <!-- Affichage du titre -->
-        <p>{{ item['texte'] }}</p>          <!-- Affichage du texte -->
+        <video 
+          v-if="item.video" 
+          class="header-video" 
+          :src="require(`@/assets/${item.video}`)"
+          autoplay 
+          muted 
+          loop 
+          playsinline
+          :style="{ pointerEvents: 'none' }"
+        ></video>     
+        <div class="button-aligner">
+          <RouterLink class="headerLink" :to="item['boutton']"><img v-if="item.buttonImg" :src="require(`@/assets/${item.buttonImg}`)" :alt="item['buttonImgAlt']"><div class="text-xs" v-if="item.buttonTxt">{{ item['buttonTxt'] }}</div></RouterLink>
+        </div>
       </div>
   </header>
 </template>
@@ -23,17 +33,42 @@ export default {
 </script>
 
 <style scoped>
-/* Vous pouvez ajouter du style pour vos éléments si nécessaire */
-.home-header {
-  display: flex;
-  width: 300vw;
-  overflow: hidden;
-}
-.slider-component {
-  height: 90vh;
-  width: 100vw;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
+  /* Vous pouvez ajouter du style pour vos éléments si nécessaire */
+  .home-header {
+    display: flex;
+    width: 300vw;
+    overflow: hidden;
+  }
+  .slider-component {
+    position: relative;
+    height: 90vh;
+    width: 100vw;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .button-aligner {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    bottom: 3rem;
+    justify-content: center;
+  }
+  .header-video {
+    min-height: 100%;
+    min-width: 100%;
+  }
+  .headerLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .7rem 3rem;
+    min-width: 9rem;
+  }
+  
+  .headerLink img {
+    max-height: 2.25rem;
+    max-width: 100%;
+  }
 </style>

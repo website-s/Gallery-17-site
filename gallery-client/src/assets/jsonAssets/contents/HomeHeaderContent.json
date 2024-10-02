@@ -1,20 +1,20 @@
 [
     {
-        "sous-titre": "coucou",
-        "titre": "gros",
-        "texte": "hamood",
-        "background": "hipppo.webp"
+        "background": "hipppo.webp",
+        "video": "talkTuah.mp4",
+        "buttonTxt": "Discover",
+        "boutton": "/contact"
     },
     {
-        "sous-titre": "coucou1",
-        "titre": "gros1",
-        "texte": "hamood1",
-        "background": "hipppo.webp"
+        "background": "hipppo.webp",
+        "buttonImg": "hipppo.webp",
+        "buttonImgAlt": "le alt",
+        "boutton": "/contact"
     },
     {
-        "sous-titre": "coucou2",
-        "titre": "gros2",
-        "texte": "hamood2",
-        "background": "hipppo.webp"
+        "background": "hipppo.webp",
+        "buttonImg": "hipppo.webp",
+        "buttonImgAlt": "le alt",
+        "boutton": "/contact"
     }
 ]
