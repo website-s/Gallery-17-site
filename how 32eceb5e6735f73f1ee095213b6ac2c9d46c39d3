@@ -1,0 +1,18 @@
+[33mcommit 27f6111bf7e400f6c1d852c75c2ff3bbc8459536[m
+Author: maleuh1234 <maeldugue7@gmail.com>
+Date:   Sat Oct 5 10:10:51 2024 +0200
+
+    push test sans mp4
+
+[1mdiff --git a/gallery-client/src/components/HomeHeader.vue b/gallery-client/src/components/HomeHeader.vue[m
+[1mindex 85d6fab..9a4ebd8 100644[m
+[1m--- a/gallery-client/src/components/HomeHeader.vue[m
+[1m+++ b/gallery-client/src/components/HomeHeader.vue[m
+[36m@@ -58,6 +58,7 @@[m [mimport ScrollTrigger from "gsap/ScrollTrigger";[m
+ import HomeHeaderContent from '../assets/jsonAssets/contents/HomeHeaderContent.json';[m
+ [m
+ gsap.registerPlugin(ScrollTrigger);[m
+[32m+[m[32mconsole.log('test')[m
+ [m
+ export default {[m
+   data() {[m
