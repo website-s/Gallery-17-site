@@ -10,7 +10,6 @@
 
 
 <script setup>
-// import ThreeScene from '../components/three-scenes/troiDtest.vue'
 import HeaderHome from '../components/HomeHeader.vue'
 import homeCarousel from '../components/Carousel.vue'
 </script>
