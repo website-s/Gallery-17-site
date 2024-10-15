@@ -1,58 +1,50 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/Home.vue'
-import AboutView from '../views/About.vue'
-import ContactView from '../views/Contact.vue'
-import CreationView from '../views/Creation.vue'
-import CreatorsView from '../views/Creators.vue'
-import OneCreatorView from '../views/OneCreator.vue'
-import WinterView from '../views/Winter.vue'
-import WinterVisitView from '../views/WinterVisit.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: () => import('../views/Home.vue')
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: ContactView
+    component: () => import('../views/Contact.vue')
   },
   {
     path: '/creation',
     name: 'Creation',
-    component: CreationView
+    component: () => import('../views/Creation.vue')
   },
   {
     path: '/creators',
     name: 'Creators',
-    component: CreatorsView
+    component: () => import('../views/Creators.vue')
   },
   {
     path: '/one-creators',
     name: 'OneCreators',
-    component: OneCreatorView
+    component: () => import('../views/OneCreator.vue')
   },
   {
     path: '/winter',
     name: 'Winter',
-    component: WinterView
+    component: () => import('../views/Winter.vue')
   },
   {
     path: '/winter-visit',
     name: 'WinterVisit',
-    component: WinterVisitView
+    component: () => import('../views/WinterVisit.vue')
   },
   {
     path: '/about',
     name: 'About',
-    component: AboutView
+    component: () => import('../views/About.vue')
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 

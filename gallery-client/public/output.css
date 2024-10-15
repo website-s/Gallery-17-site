@@ -562,6 +562,18 @@ video {
   position: relative;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
 .block {
   display: block;
 }
@@ -574,18 +586,56 @@ video {
   display: none;
 }
 
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .resize {
   resize: both;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.text-2xl {
+  font-size: 2.6rem;
+}
+
+.text-3xl {
+  font-size: 4.15rem;
+}
+
+.text-lg {
+  font-size: 1.25rem;
 }
 
 .text-xs {
   font-size: .75rem;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* il faut faire un output pour voir les modifs comme pour tailwind */
+
 * {
   margin: 0;
   padding: 0;
-  color: #000;
 }
 
 body, 
@@ -602,4 +652,30 @@ html {
 a {
   font-weight: 580;
   text-decoration: none;
+  background-color: #fff;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+a > * {
+  transition: all 0.3s ease;
+}
+
+a:hover, 
+a:hover > * {
+  color: #ffffffda;
+}
+
+a:hover {
+  background-color: #00000065;
+  color: #ffffffda;
+}
+
+.text-section {
+  padding: 7rem 5rem;
+}
+
+.dark {
+  background-color: #000;
+  color: #fff;
 }

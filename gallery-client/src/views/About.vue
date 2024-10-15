@@ -1,5 +1,10 @@
 <template>
-<div></div>
+<div>ABOUT</div>
+<div>ABOUT</div>
+<div>ABOUT</div>
+<div>ABOUT</div>
+<div>ABOUT</div>
+<div>ABOUT</div>
 </template>
 
 <script>

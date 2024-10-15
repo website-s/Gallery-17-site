@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* il faut faire un output pour voir les modifs comme pour tailwind */
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
@@ -25,21 +27,32 @@ a {
     text-decoration: none;
     background-color: #fff;
     color: #000;
-    border: 1px solid #00000000;
-    transition: .3s;
+    transition: all 0.3s ease;
 }
 
 a > * {
-    transition: .3s;
+    transition: all 0.3s ease;
 }
 
 a:hover, 
 a:hover > * {
-    color: #fff;
+    color: #ffffffda;
 }
 
 a:hover {
+    background-color: #00000065;
+    color: #ffffffda;
+}
+
+.text-section {
+    padding: 7rem 5rem;
+}
+
+.dark {
     background-color: #000;
     color: #fff;
-    border: 1px solid #fff;
+}
+
+.transparent {
+    opacity: 0;
 }
