@@ -610,6 +610,10 @@ video {
   font-size: 1.25rem;
 }
 
+.text-xl {
+  font-size: 2.25rem;
+}
+
 .text-xs {
   font-size: .75rem;
 }
@@ -678,4 +682,8 @@ a:hover {
 .dark {
   background-color: #000;
   color: #fff;
+}
+
+.transparent {
+  opacity: 0;
 }

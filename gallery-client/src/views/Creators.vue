@@ -2,13 +2,17 @@
   <div id="smooth-wrapper">
     <div id="smooth-content">
       <header class="page-header">
-          <h1 ref="h1" class="text-3xl" data-speed="1.2">HAMOOD</h1>
+          <h1 ref="h1" class="text-3xl uppercase" data-speed="1.2">creators</h1>
       </header>
-      <p class="intro paragraph"></p>
+      <div class="intro-container">
+        <p class="intro paragraph text-lg">Carefully chosen to fit our gallery’s cryterias, we are proud to present to you our associates. </p>
+      </div>
       <div class="creator-container">
-        <div class="static-img-container"><img class="static-image" src="" alt=""></div>
+        <div class="static-img-container"><img class="static-image" data-speed="1.8" src="../assets/hipppo.webp" alt=""></div>
         <div class="creator-container">
-          <img class="creator-img" src="" alt="">
+          <div class="creator-img-container">
+            <img class="creator-img" src="../assets/hipppo.webp" alt="">
+          </div>
           <div class="text-container">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla porttitor nulla in ipsum tempor interdum. Etiam eget bibendum purus. Nam convallis urna et diam facilisis efficitur. </p>
             <div class="signature">maya p.</div>
@@ -16,6 +20,7 @@
           </div>
         </div>
       </div>
+      <div class="spacer"></div>
     </div>
   </div>
 </template>
@@ -57,8 +62,40 @@ onBeforeUnmount(() => {
     color: #fff;
     z-index: 1;
     position: absolute;
-    bottom: 3rem;
-    left: 1rem;
+    bottom: 5rem;
+    left: 5rem;
+  }
+
+  .intro-container {
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+
+  .static-img-container {
+    height: 10rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .static-img-container img {
+    position: absolute;
+    width: 100%;
+    top: -23rem;
+  }
+  
+  .creator-img-container {
+    height: 20rem;
+    width: 10rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .creator-img {
+    height: 100%;
+    position: relative;
+    max-width: none;
   }
   
   .entry-from {

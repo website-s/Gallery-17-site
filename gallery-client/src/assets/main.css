@@ -56,3 +56,7 @@ a:hover {
 .transparent {
     opacity: 0;
 }
+
+.spacer {
+    height: 100vh;
+}
