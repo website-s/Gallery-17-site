@@ -63,7 +63,6 @@ onMounted(() => {
     scrollTrigger: {
       trigger: creatorsH2.value,
       start: "top 60%", 
-      markers: true,
       onEnter: () => {
         if (!animationDone1) {
           animationDone1 = true;
@@ -94,7 +93,6 @@ onMounted(() => {
     scrollTrigger: {
       trigger: galleryH2.value,
       start: "top 60%", 
-      markers: true,
       onEnter: () => {
         if (!animationDone) {
           animationDone = true;
