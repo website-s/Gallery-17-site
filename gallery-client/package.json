@@ -12,7 +12,6 @@
     "dat.gui": "^0.7.9",
     "gsap": "file:gsap-bonus.tgz",
     "tailwindcss": "^3.4.13",
-    "three": "^0.168.0",
     "vue": "^3.2.13",
     "vue-router": "^4.4.5",
     "webpack-dev-server": "^5.1.0"

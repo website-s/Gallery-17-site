@@ -554,6 +554,10 @@ video {
   display: none;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -608,10 +612,6 @@ video {
 
 .text-lg {
   font-size: 1.25rem;
-}
-
-.text-xl {
-  font-size: 2.25rem;
 }
 
 .text-xs {
@@ -686,4 +686,8 @@ a:hover {
 
 .transparent {
   opacity: 0;
+}
+
+.spacer {
+  height: 100vh;
 }

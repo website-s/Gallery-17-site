@@ -1,13 +1,12 @@
 <template>
   <div id="smooth-wrapper">
     <div id="smooth-content">
-      <!-- <ThreeScene /> -->
       <HeaderHome/>
       <section class="last-creations">
         <h2 class="text-2xl uppercase text-white">Latest creations</h2>
         <homeCarousel/>
       </section>
-      <section class="text-section">
+      <section class="text-section" ref="scene1">
         <div data-speed="0.9">
           <h2 ref="creatorsH2" class="text-2xl uppercase mb-2">creators</h2>
           <p ref="creatorsP" class="text-paragraph mb-10 transparent">Discover unique talents revealing their authentic vision and exceptional craftsmanship. Immerse yourself in distinctive worlds and be captivated by exclusive creations and designs, where originality and excellence take center stage.</p>
@@ -18,7 +17,7 @@
           </div>
         </div>
       </section>
-      <section class="text-section dark">
+      <section class="text-section dark" ref="scene2">
         <div data-speed="1.1">
           <h2 ref="galleryH2" class="text-2xl uppercase mb-2">The gallery</h2>
           <p ref="galleryP" class="text-paragraph mb-10 transparent">Discover Gallery17, the virtual gallery celebrating creators from all horizons. Each talent unveils a unique vision and authentic craftsmanship.</p>
@@ -37,89 +36,112 @@
   </div>
 </template>
 
-
 <script setup>
+import gsap from 'gsap';
+import { ref, onMounted, onUnmounted } from 'vue';
 import HeaderHome from '../components/HomeHeader.vue'
 import homeCarousel from '../components/Carousel.vue'
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import { ref, onMounted} from 'vue';
 
-gsap.registerPlugin(ScrollTrigger)
 
+const scene1 = ref(null);
+const creatorsH2 = ref(null);
+const creatorsP = ref(null);
+const creatorsLink1 = ref(null);
+const scene2 = ref(null);
 const galleryH2 = ref(null);
 const galleryP = ref(null);
 const galleryLink1 = ref(null);
 
-const creatorsH2 = ref(null);
-const creatorsP = ref(null);
-const creatorsLink1 = ref(null);
-
-let animationDone = false;
-let animationDone1 = false;
+let ctx; // Contexte GSAP
+let observer1, observer2;
 
 onMounted(() => {
-  const timeline2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: creatorsH2.value,
-      start: "top 60%", 
-      onEnter: () => {
-        if (!animationDone1) {
-          animationDone1 = true;
-          timeline2.play();
+  // Initialiser le contexte GSAP
+  ctx = gsap.context((self) => {
+    // Animation pour `scene1`
+    const scene1Anim = gsap.timeline({ paused: true });
+      scene1Anim.fromTo(
+        self.selector(creatorsH2.value),
+        { x: -50, opacity: 0 },
+        { x: 0, duration: 2, opacity: 1, ease: 'power4.out' }
+      )
+      scene1Anim.fromTo(
+        self.selector(creatorsP.value),
+        { x: -50, opacity: 0 },
+        { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
+        "<+=0.1"
+      );
+      scene1Anim.fromTo(
+        self.selector(creatorsLink1.value),
+        { x: -50, opacity: 0 },
+        { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
+        "<+=0.25"
+      );
+
+      // Définir l'animation de `scene2`
+    const scene2Anim = gsap.timeline({ paused: true }); // L'animation est contrôlée manuellement
+    scene2Anim.fromTo(
+      self.selector(galleryH2.value),
+      { x: -50, opacity: 0 },
+      { x: 0, duration: 2, opacity: 1, ease: 'power4.out' }
+    );
+    scene2Anim.fromTo(
+      self.selector(galleryP.value),
+      { x: -50, opacity: 0 },
+      { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
+      "<+=0.1"
+    );
+    scene2Anim.fromTo(
+      self.selector(galleryLink1.value),
+      { x: -50, opacity: 0 },
+      { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
+      "<+=0.25"
+    );
+
+    observer1 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Jouer l'animation lorsque `scene1` entre dans le viewport
+          if (scene1Anim.reversed()) {
+            scene1Anim.play();
+          } else {
+            scene1Anim.restart();
+          }
+        } else {
+          // Revenir en arrière lorsque `scene1` quitte le viewport
+          scene1Anim.reverse();
         }
       },
-      once: true
-    }
-  });
+      { threshold: 0.4 }
+    );
+    observer1.observe(scene1.value);
 
-  timeline2.fromTo(creatorsH2.value, 
-    { x: -80, opacity: 0 },
-    { x: 0, duration: 1, opacity: 1, ease: 'power4.out' }
-  );
-
-  timeline2.fromTo(creatorsP.value, 
-  { x: -80, opacity: 0 },
-  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
-    "<+=0.1"
-  );
-  timeline2.fromTo(creatorsLink1.value, 
-  { x: -80, opacity: 0 },
-  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
-    "<+=0.2"
-  );
-
-  const timeline1 = gsap.timeline({
-    scrollTrigger: {
-      trigger: galleryH2.value,
-      start: "top 60%", 
-      onEnter: () => {
-        if (!animationDone) {
-          animationDone = true;
-          timeline1.play();
+    // Intersection Observer pour `scene2`
+    observer2 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Jouer l'animation lorsque `scene2` entre dans le viewport
+          if (scene2Anim.reversed()) {
+            scene2Anim.play();
+          } else {
+            scene2Anim.restart();
+          }
+        } else {
+          // Revenir en arrière lorsque `scene2` quitte le viewport
+          scene2Anim.reverse();
         }
       },
-      once: true
-    }
-  });
-
-  timeline1.fromTo(galleryH2.value, 
-    { x: -80, opacity: 0 },
-    { x: 0, duration: 1, opacity: 1, ease: 'power4.out' }
-  );
-
-  timeline1.fromTo(galleryP.value, 
-  { x: -80, opacity: 0 },
-  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
-    "<+=0.1"
-  );
-  timeline1.fromTo(galleryLink1.value, 
-  { x: -80, opacity: 0 },
-  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
-    "<+=0.2"
-  );
+      { threshold: 0.4 }
+    );
+    observer2.observe(scene2.value);
+  }, document.body);
 });
 
+onUnmounted(() => {
+  // Nettoyer les animations lors du démontage
+  ctx?.revert();
+  observer1?.disconnect();
+  observer2?.disconnect();});
 </script>
 <script>
 export default {
@@ -140,7 +162,7 @@ export default {
   a {
     background-color: #000;
     color: #fff;
-    border: 1px solid #00000000;
+    border: 1.5px solid #00000000;
     padding: .5rem 2rem;
   }
 
@@ -151,7 +173,7 @@ export default {
 
   a:hover {
     background-color: #fff;
-    border: 1px solid #000;
+    border: 1.5px solid #000;
   }
 
   a:hover button{
@@ -160,12 +182,12 @@ export default {
   .dark-a {
     background-color: #fff;
     color: #000;
-    border: 1px solid #ffffff00;
+    border: 1.5px solid #ffffff00;
     padding: .5rem 2rem;
   }
   .dark-a:hover {
     background-color: #000;
-    border: 1px solid #fff;
+    border: 1.5px solid #fff;
   }
 
   .dark-a:hover button{

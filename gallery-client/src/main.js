@@ -1,40 +1,44 @@
-import './assets/main.css'
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import gsap from 'gsap'
-import ScrollSmoother from 'gsap/dist/ScrollSmoother'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import './assets/main.css';
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import gsap from 'gsap';
+import ScrollSmoother from 'gsap/ScrollSmoother';
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+gsap.registerPlugin(ScrollSmoother);
 
-const app = createApp(App)
+console.log(ScrollSmoother);
 
-app.use(router).mount('#app')
+const app = createApp(App);
 
-// Fonction pour créer ScrollSmoother
 const initScrollSmoother = () => {
-  if (ScrollSmoother.get()) {
-    ScrollSmoother.get().kill(); // Tue l'instance existante pour éviter les conflits
+  try {
+    // Détruire une instance existante, si elle existe
+    const smoother = ScrollSmoother.get();
+    if (smoother) {
+      smoother.kill();
+    }
+
+    // Créer une nouvelle instance
+    ScrollSmoother.create({
+      wrapper: '#smooth-wrapper', // ID du conteneur principal
+      content: '#smooth-content', // ID du contenu défilable
+      smooth: 1.5, // Niveau de lissage
+      effects: true, // Activer les effets de ScrollTrigger
+    });
+
+    console.log('ScrollSmoother initialized successfully');
+  } catch (error) {
+    console.error('Error initializing ScrollSmoother:', error);
   }
-  
-  // Réinitialise ScrollSmoother
-  ScrollSmoother.create({
-    wrapper: '#smooth-wrapper',
-    content: '#smooth-content',
-    smooth: 1.5,
-    effects: true, // Active les effets de parallaxe avec data-speed
-  });
 };
 
-// Initialisation de ScrollSmoother après le chargement de la page
-window.addEventListener('load', () => {
-  initScrollSmoother();
+// Initialisation après le chargement de la page
+window.addEventListener('load', initScrollSmoother);
+
+// Réinitialisation après chaque navigation
+router.afterEach(() => {
+  setTimeout(initScrollSmoother, 100); // Attendre que le DOM soit mis à jour
 });
 
-// Réinitialisation après chaque changement de route
-router.afterEach(() => {
-  setTimeout(() => {
-    initScrollSmoother(); // Réinitialise SmoothSmoother après la navigation
-  }, 100); // Légère temporisation pour s'assurer que le DOM est prêt
-});
+app.use(router).mount('#app');

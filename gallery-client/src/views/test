@@ -1,0 +1,83 @@
+
+<script setup>
+import HeaderHome from '../components/HomeHeader.vue'
+import homeCarousel from '../components/Carousel.vue'
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ref, onMounted} from 'vue';
+
+gsap.registerPlugin(ScrollTrigger)
+
+const galleryH2 = ref(null);
+const galleryP = ref(null);
+const galleryLink1 = ref(null);
+
+const creatorsH2 = ref(null);
+const creatorsP = ref(null);
+const creatorsLink1 = ref(null);
+
+let animationDone = false;
+let animationDone1 = false;
+
+onMounted(() => {
+  const timeline2 = gsap.timeline({
+    scrollTrigger: {
+      trigger: creatorsH2.value,
+      start: "top 60%", 
+      onEnter: () => {
+        if (!animationDone1) {
+          animationDone1 = true;
+          timeline2.play();
+        }
+      },
+      once: true
+    }
+  });
+
+  timeline2.fromTo(creatorsH2.value, 
+    { x: -80, opacity: 0 },
+    { x: 0, duration: 1, opacity: 1, ease: 'power4.out' }
+  );
+
+  timeline2.fromTo(creatorsP.value, 
+  { x: -80, opacity: 0 },
+  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
+    "<+=0.1"
+  );
+  timeline2.fromTo(creatorsLink1.value, 
+  { x: -80, opacity: 0 },
+  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
+    "<+=0.2"
+  );
+
+  const timeline1 = gsap.timeline({
+    scrollTrigger: {
+      trigger: galleryH2.value,
+      start: "top 60%", 
+      onEnter: () => {
+        if (!animationDone) {
+          animationDone = true;
+          timeline1.play();
+        }
+      },
+      once: true
+    }
+  });
+
+  timeline1.fromTo(galleryH2.value, 
+    { x: -80, opacity: 0 },
+    { x: 0, duration: 1, opacity: 1, ease: 'power4.out' }
+  );
+
+  timeline1.fromTo(galleryP.value, 
+  { x: -80, opacity: 0 },
+  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
+    "<+=0.1"
+  );
+  timeline1.fromTo(galleryLink1.value, 
+  { x: -80, opacity: 0 },
+  { x: 0, duration: 1, opacity: 1, ease: 'power4.out' },
+    "<+=0.2"
+  );
+});
+</script>

@@ -148,6 +148,11 @@ export default {
 .nav-right:hover {
   background-color: #00000065;
 }
+
+.text-xs {
+  font-weight: 570;
+}
+
 .nav-left svg,
 .nav-right svg{
   height: 1rem;
