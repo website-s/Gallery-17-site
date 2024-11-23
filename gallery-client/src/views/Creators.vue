@@ -22,7 +22,7 @@
               </div>
               <div class="right-aligner">
                 <div class="signature">maya p.</div>
-                <RouterLink to="/oneCreator">
+                <RouterLink to="/one-creator">
                   <button>Visit creator page</button>
                 </RouterLink>
               </div>

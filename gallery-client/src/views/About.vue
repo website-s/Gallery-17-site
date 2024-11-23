@@ -136,7 +136,7 @@ export default {
   align-items: center;
 }
 .scene1 {
-  background-image: url(../assets/about/rendupc2.jpg);
+  background-image: url(../assets/about/rendupc1.jpg);
 }
 
 .scene2 {
@@ -178,7 +178,7 @@ p {
   }
   
   .scene2 {
-    background-image: url(../assets/about/renduipad1.jpg);
+    background-image: url(../assets/about/renduipad2.jpg);
   }
 }
 

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-          <navigation-d :key="$route.fullPath"/>
-          <router-view :key="$route.fullPath"></router-view>
-      </div>
+    <navigation-d v-if="$route.meta.showNavigation" :key="$route.fullPath" />
+    <router-view :key="$route.fullPath"></router-view>
+  </div>
 </template>
 
 <script setup>

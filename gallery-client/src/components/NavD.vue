@@ -36,7 +36,7 @@
 </template>
 <script setup>
 import gsap from 'gsap';
-import { ref, onMounted} from 'vue';
+import { ref, onMounted, onUnmounted} from 'vue';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,55 +57,55 @@ const navCLose = () => {
     gsap.to(navClick.value, { left: '-120vw', duration: 0.5 });
 };
 
+let observer;
+let animation;
 
 onMounted(() => {
+
+    console.log(menu.value);
+    
 
     const timeline1 = gsap.timeline();
     
     timeline1.fromTo(links.value, 
-    { y: -80, opacity: 0 },
-    { y: 0, duration: 1, opacity: 1, ease: 'power4.out' }
-);
-timeline1.fromTo(logo.value, 
-{ y: -80, opacity: 0 },
-{ y: 0, duration: 1, opacity: 1, ease: 'power4.out' }, 
-"<+=0.2"
-);
-timeline1.fromTo(picto.value, 
-{ y: -80, opacity: 0 },
-{ y: 0, duration: 1, opacity: 1, ease: 'power4.out' }, 
-"<+=0.4"
-);
+        { y: -80, opacity: 0 },
+        { y: 0, duration: 1, opacity: 1, ease: 'power4.out' }
+    );
+    timeline1.fromTo(logo.value, 
+        { y: -80, opacity: 0 },
+        { y: 0, duration: 1, opacity: 1, ease: 'power4.out' }, 
+        "<+=0.2"
+    );
+    timeline1.fromTo(picto.value, 
+        { y: -80, opacity: 0 },
+        { y: 0, duration: 1, opacity: 1, ease: 'power4.out' }, 
+        "<+=0.4"
+    );
 
-const timeline2 = gsap.timeline({
-    scrollTrigger: {
-        trigger: nav.value, // Your navigation element
-        start: "40px top",   // Trigger when the top of the nav hits the top of the viewport
-        toggleActions: "play none none reverse" // Reverse animation when scrolling back up
-    }
+    animation = gsap.fromTo(
+        menu.value,
+        { y: -40, opacity: 0 }, // État initial
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power1.out', paused: true } // État final (animation en pause)
+    );
+
+    observer = new IntersectionObserver(
+        ([entry]) => {
+            if (!entry.isIntersecting) {
+                console.log('lancement');
+                animation.play(); // Play timeline2 when .navigation leaves the viewport
+            } else {
+                animation.reverse(); // Reverse timeline2 when .navigation re-enters
+                console.log('retour');
+            }
+        },
+        { threshold: 0.1 } // Adjust threshold to fit your animation trigger point
+    );
+
+    observer.observe(nav.value);
 });
 
-
-timeline2.fromTo(links.value, 
-{ y: 0, opacity: 1 }, 
-{ y: -80, duration: 1, opacity: 0, ease: 'power4.in' }
-);
-timeline2.fromTo(logo.value, 
-{ y: 0, opacity: 1 }, 
-{ y: -80, duration: 1, opacity: 0, ease: 'power4.in' }, 
-"<+0.1"
-);
-timeline2.fromTo(picto.value, 
-{ y: 0, opacity: 1 }, 
-{ y: -80, duration: 1, opacity: 0, ease: 'power4.in' }, 
-"<+=0.2"
-);
-timeline2.fromTo(menu.value, 
-{ y: -40, opacity: 0 },
-    { y: 0, duration: .5, opacity: 1, ease: 'power1.out' }, 
-    "<+=0.4"
-  );
-
+onUnmounted(() => {
+    if (observer) observer.disconnect(); // Clean up the observer
 });
 </script>
 <script>
@@ -126,7 +126,7 @@ timeline2.fromTo(menu.value,
         position: fixed;
         top: 2rem;
         left: 2rem;
-        opacity: 0;
+        opacity: 1;
     }
 
     .menu:hover {
@@ -151,7 +151,7 @@ timeline2.fromTo(menu.value,
     .navigation-click {
         background-color: #fff;
         color: #000;
-        width: 16.18%;
+        width: 20%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -168,6 +168,7 @@ timeline2.fromTo(menu.value,
     .main-links-click {
         display: flex;
         flex-direction: column;
+        align-items: center;
         width: 75%;
         margin-bottom: 3rem;
     }
@@ -183,6 +184,7 @@ timeline2.fromTo(menu.value,
 
     .picto-links-click {
         display: flex;
+        justify-content: center;
         width: 75%;
     }
 
@@ -199,7 +201,7 @@ timeline2.fromTo(menu.value,
     }
     
     .navigation {
-        position: fixed;
+        position: absolute;
         display: flex;
         align-items: center;
         width: 100%;

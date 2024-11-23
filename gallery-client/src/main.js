@@ -27,7 +27,6 @@ const initScrollSmoother = () => {
       effects: true, // Activer les effets de ScrollTrigger
     });
 
-    console.log('ScrollSmoother initialized successfully');
   } catch (error) {
     console.error('Error initializing ScrollSmoother:', error);
   }
