@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{html,js,vue}', // Scan tous les fichiers HTML, JS et Vue dans src
-    './public/**/*.html',        // Scan tous les fichiers HTML dans public
+    './src/**/*.{html,js,vue}', 
+    './public/**/*.html', 
   ],
   theme: {
     extend: {

@@ -68,3 +68,16 @@ a:hover {
 .spacer {
     height: 100vh;
 }
+
+@media screen and (max-width: 768px) {
+    .text-section {
+      padding: 4rem 3rem;
+    } 
+
+  }
+
+  @media screen and (max-width: 480px) {
+   .text-section {
+     padding: 3rem 2rem;
+   } 
+  }

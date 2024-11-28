@@ -13,7 +13,6 @@ import { gsap } from "gsap"
 
 gsap.registerPlugin(Draggable);
 
-
     export default {
         data() {
             return {

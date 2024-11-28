@@ -28,8 +28,8 @@
       <div class="variant"></div>
       <div class="variant"></div>
     </div>
-    <div class="dots.variants">
-      <button class="dot"></button>
+    <div class="dots-variants">
+      <button class="dot active"></button>
       <button class="dot"></button>
     </div>
   </div>
@@ -72,7 +72,7 @@ export default {
 
 .dots-img {
   position: absolute;
-  right: 0;
+  right: -.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -82,19 +82,29 @@ export default {
   width: 1.85rem;
   height: .4rem;
   margin: .5rem;
+  position: relative;
+  left: 0;
   transition: all .3s ;
 }
 
 .dot:hover {
-  height: .75rem;
-  margin: .3rem;
-  margin-left: .5rem;
+  left: .1rem;
 }
 
 .dot.active {
   border-radius: 100%;
   height: auto;
   aspect-ratio: 1/1;
+}
+
+.dots-variants .dot:hover {
+  left: 0;
+}
+¨
+.dots-variants .dot {
+  width: .4rem;
+  height: 1.85rem;
+  background-color: aqua;
 }
 
 .cross {
@@ -122,8 +132,8 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
+  margin-top: 4rem;
+  margin-bottom: 4.5rem;
 }
 
 .basket {
@@ -168,6 +178,20 @@ p {
   background-color: #fff;
   color: #000;
 }
+/* 
+.carousel-variants {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
 
+.variant {
+  background-image: url(../assets/hipppo.webp);
+  margin-right: 2rem;
+  height: 14rem;
+  aspect-ratio: 3/4;
+  position: relative;
+} */
 
 </style>

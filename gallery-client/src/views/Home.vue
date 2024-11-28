@@ -3,12 +3,12 @@
     <div id="smooth-content">
       <HeaderHome/>
       <section class="last-creations">
-        <h2 class="text-2xl uppercase text-white">Latest creations</h2>
+        <h2 class="md:text-2xl text-xl uppercase text-white">Latest creations</h2>
         <homeCarousel/>
       </section>
       <section class="text-section" ref="scene1">
         <div data-speed="0.9">
-          <h2 ref="creatorsH2" class="text-2xl uppercase mb-2">creators</h2>
+          <h2 ref="creatorsH2" class="md:text-2xl text-xl uppercase mb-2">creators</h2>
           <p ref="creatorsP" class="text-paragraph mb-10 transparent">Discover unique talents revealing their authentic vision and exceptional craftsmanship. Immerse yourself in distinctive worlds and be captivated by exclusive creations and designs, where originality and excellence take center stage.</p>
           <div ref="creatorsLink1" class="link-container">
             <RouterLink to="/creators">
@@ -19,13 +19,13 @@
       </section>
       <section class="text-section dark" ref="scene2">
         <div data-speed="1.1">
-          <h2 ref="galleryH2" class="text-2xl uppercase mb-2">The gallery</h2>
+          <h2 ref="galleryH2" class="md:text-2xl text-xl uppercase mb-2">The gallery</h2>
           <p ref="galleryP" class="text-paragraph mb-10 transparent">Discover Gallery17, the virtual gallery celebrating creators from all horizons. Each talent unveils a unique vision and authentic craftsmanship.</p>
           <div ref="galleryLink1" class="link-container">
             <RouterLink to="/about" class="dark-a">
               <button class="uppercase text-lg">About us</button>
             </RouterLink>
-            <RouterLink to="/contact" class="dark-a ml-5">
+            <RouterLink to="/contact" class="dark-a mt-4 md:mt-0 ml-0 md:ml-5">
               <button class="uppercase text-lg">contact</button>
             </RouterLink>
           </div>
@@ -167,6 +167,7 @@ export default {
   }
 
   .link-container {
+    display: flex;
     position: relative;
     opacity: 0;
   }
@@ -196,6 +197,25 @@ export default {
 
   .text-paragraph {
     width: 40%;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .last-creations {
+      padding: 4rem 3rem;
+    } 
+    .text-paragraph {
+      width: 100%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .last-creations {
+      padding: 3rem 2rem;
+    } 
+    .link-container {
+      flex-direction: column;
+      align-items: start;
+    }
   }
 
 </style>
