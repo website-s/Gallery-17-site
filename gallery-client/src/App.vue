@@ -12,7 +12,6 @@ import NavigationM from "./components/NavM.vue";
 </script>
 
 <script>
-
 export default {
   name: 'App',
 };

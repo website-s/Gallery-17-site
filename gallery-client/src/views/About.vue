@@ -1,29 +1,36 @@
 <template>
   <div id="smooth-wrapper">
     <div id="smooth-content">
+      <div ref="scene0" class="scene scene0">
+          <h1 ref="scene0H2" class="about-h1"></h1>
+      </div>
       <div ref="scene1" class="scene scene1">
         <div data-speed="1.3" class="text-container">
           <h2 ref="scene1H2" class="text-2xl">concept</h2>
-          <p ref="scene1P">
-            Découvrez Gallery17, la galerie virtuelle qui célèbre les créateurs
-            et créatrices. Chaque talent y dévoile une vision unique et un
-            savoir-faire authentique. Plongez dans leurs univers singuliers et
-            laissez vous séduire par des créations et des designs exclusifs,
-            où l'originalité et l'excellence prennent le devant de la scène.
-          </p>
+          <div ref="scene1P" class="p-container">
+            <p>Gallery17 a pour mission de célébrer la créativité et l’authenticité. Nous offrons une plateforme où chaque talent peut présenter ses œuvres, son univers et son savoir-faire.</p>
+            <p>En explorant notre galerie, vous découvrirez des créations exclusives et des univers artistiques uniques, soigneusement sélectionnés pour leur originalité et leur qualité exceptionnelle.</p>
+          </div>
         </div>
       </div>
       <div ref="scene2" class="scene scene2">
         <div data-speed="1.3" class="text-container">
-          <h2 ref="scene2H2" class="text-2xl">Démarche</h2>
-          <p ref="scene2P">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-            porttitor nulla in ipsum tempor interdum. Etiam eget bibendum
-            purus. Nam convallis urna et diam facilisis efficitur.
-          </p>
+          <h2 ref="scene2H2" class="text-2xl">Philosophie</h2>
+          <div ref="scene2P" class="p-container">
+            <p>Chez Gallery17, nous mettons en avant l’authenticité et la diversité artistique. Notre objectif est de donner une tribune aux visions uniques des créateurs, en révélant des récits à travers leurs œuvres.</p>
+            <p>Nous sommes convaincus que l’art et le design enrichissent notre façon de voir le monde et stimulent des échanges enrichissants. En soutenant les talents émergents, nous favorisons un environnement où la créativité peut s’épanouir pleinement et librement.</p>
+          </div>
         </div>
       </div>
-      <div class="spacer"></div>
+      <div ref="scene3" class="scene scene3">
+        <div data-speed="1.3" class="text-container">
+          <h2 ref="scene3H2" class="text-2xl">Collaboration</h2>
+          <div ref="scene3P" class="p-container">
+            <p>La collaboration est un pilier fondamental de Gallery17. Nous accompagnons les créateurs dans la mise en valeur de leurs œuvres tout en leur offrant une visibilité alignée sur leurs objectifs.</p>
+            <p>Notre plateforme est conçue comme un espace de synergie et de partage, où chaque collaboration ouvre la porte à de nouvelles expressions artistiques. Ensemble, nous construisons une communauté qui célèbre l’excellence, l’originalité et l’innovation.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,20 +40,31 @@ import gsap from 'gsap';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 
+const scene0 = ref(null);
+const scene0H2 = ref(null);
 const scene1 = ref(null);
 const scene1H2 = ref(null);
 const scene1P = ref(null);
 const scene2 = ref(null);
 const scene2H2 = ref(null);
 const scene2P = ref(null);
+const scene3 = ref(null);
+const scene3H2 = ref(null);
+const scene3P = ref(null);
 
 let ctx; // Contexte GSAP
-let observer1, observer2;
+let observer0, observer1, observer2, observer3;
 
 onMounted(() => {
   // Initialiser le contexte GSAP
   ctx = gsap.context((self) => {
     // Animation pour `scene1`
+    const scene0Anim = gsap.timeline({ paused: true });
+      scene0Anim.fromTo(
+        self.selector(scene0H2.value),
+        { y: -50, opacity: 0 },
+        { y: 0, duration: 2, opacity: 1, ease: 'power4.out' }
+      )
     const scene1Anim = gsap.timeline({ paused: true });
       scene1Anim.fromTo(
         self.selector(scene1H2.value),
@@ -59,8 +77,6 @@ onMounted(() => {
         { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
         "<+=0.3"
       );
-
-      // Définir l'animation de `scene2`
     const scene2Anim = gsap.timeline({ paused: true }); // L'animation est contrôlée manuellement
     scene2Anim.fromTo(
       self.selector(scene2H2.value),
@@ -73,6 +89,36 @@ onMounted(() => {
       { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
       "<+=0.3"
     );
+    const scene3Anim = gsap.timeline({ paused: true });
+      scene3Anim.fromTo(
+        self.selector(scene3H2.value),
+        { x: -50, opacity: 0 },
+        { x: 0, duration: 2, opacity: 1, ease: 'power4.out' }
+      )
+      scene3Anim.fromTo(
+        self.selector(scene3P.value),
+        { x: -50, opacity: 0 },
+        { x: 0, duration: 2, opacity: 1, ease: 'power4.out' },
+        "<+=0.3"
+      );
+
+    observer0 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Jouer l'animation lorsque `scene1` entre dans le viewport
+          if (scene0Anim.reversed()) {
+            scene0Anim.play();
+          } else {
+            scene0Anim.restart();
+          }
+        } else {
+          // Revenir en arrière lorsque `scene1` quitte le viewport
+          scene0Anim.reverse();
+        }
+      },
+      { threshold: 0.7 }
+    );
+    observer0.observe(scene0.value);
 
     observer1 = new IntersectionObserver(
       ([entry]) => {
@@ -110,12 +156,30 @@ onMounted(() => {
       { threshold: 0.6 }
     );
     observer2.observe(scene2.value);
+    observer3 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Jouer l'animation lorsque `scene2` entre dans le viewport
+          if (scene3Anim.reversed()) {
+            scene3Anim.play();
+          } else {
+            scene3Anim.restart();
+          }
+        } else {
+          // Revenir en arrière lorsque `scene2` quitte le viewport
+          scene3Anim.reverse();
+        }
+      },
+      { threshold: 0.6 }
+    );
+    observer3.observe(scene3.value);
   }, document.body);
 });
 
 onUnmounted(() => {
   // Nettoyer les animations lors du démontage
   ctx?.revert();
+  observer0?.disconnect();
   observer1?.disconnect();
   observer2?.disconnect();});
 </script>
@@ -135,6 +199,20 @@ export default {
   display: flex;
   align-items: center;
 }
+
+.about-h1 {
+  background-image: url(../assets/about/logo.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.scene0 {
+  background-image: url(../assets/about/top-bg.jpg);
+}
+
 .scene1 {
   background-image: url(../assets/about/rendupc1.jpg);
 }
@@ -144,9 +222,13 @@ export default {
   flex-direction: row-reverse;
 }
 
+.scene3 {
+  background-image: url(../assets/about/rendupc3.jpg);
+}
+
 .text-container {
   color: white;
-  width: 45%;
+  width: 55%;
   padding: 0 10%;
 }
 
@@ -158,14 +240,23 @@ h2 {
 
 p {
   font-weight: 400;
+  margin-bottom: .8rem;
+}
+
+.p-container {
   opacity: 0;
 }
 
+@media screen and (max-width: 1440px) {
+  .text-container {
+    width: 60%;
+  }
+}
 @media screen and (max-width: 1025px) {
   .scene {
     background-position: bottom center;
     align-items: start;
-    padding-top: 13rem;
+    padding-top: 7rem;
   }
 
   .text-container {
@@ -179,6 +270,10 @@ p {
   
   .scene2 {
     background-image: url(../assets/about/renduipad2.jpg);
+  }
+
+  .scene3 {
+    background-image: url(../assets/about/renduipad3.jpg);
   }
 }
 

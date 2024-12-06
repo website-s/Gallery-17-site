@@ -792,6 +792,12 @@ a:hover {
   }
 }
 
+@media (min-width: 640px) {
+  .sm\:text-2xl {
+    font-size: 2.6rem;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:ml-5 {
     margin-left: 1.25rem;
@@ -803,5 +809,9 @@ a:hover {
 
   .md\:text-2xl {
     font-size: 2.6rem;
+  }
+
+  .md\:text-3xl {
+    font-size: 4.15rem;
   }
 }

@@ -2,7 +2,7 @@
   <div id="smooth-wrapper">
     <div id="smooth-content">
       <header class="page-header">
-          <h1 ref="h1" class="text-3xl uppercase" data-speed="1.2">creators</h1>
+          <h1 ref="h1" class="text-2xl md:text-3xl uppercase" data-speed="1.2">creators</h1>
       </header>
       <div class="intro-container">
         <p class="intro paragraph text-lg">Carefully chosen to fit our gallery’s cryterias, we are proud to present to you our associates. </p>
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'CreatorsView' 
   }
@@ -181,5 +180,51 @@ onBeforeUnmount(() => {
 
   a:hover button{
     color: #000; 
+  }
+
+  @media screen and (max-width: 768px) {
+    h1 {
+      bottom: 7rem;
+      left: 3rem;
+    }
+    .content {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .static-img-container {
+      display: none;
+    }
+    .creator-content-container {
+      padding-top: 2rem;
+    }
+    .creator-img-container {
+      width: 100%;
+    }
+    .left-container {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0 2rem;
+    }
+    .signature {
+      margin-bottom: 2rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    h1 {
+      bottom: 7rem;
+      left: 1rem;
+    }
+    .intro-container {
+      padding: 3rem 1rem;
+    }
+    .left-container {
+      width: 100vw;
+      padding: 0 .5rem;
+    }
+    .signature {
+      margin-bottom: .75rem;
+    }
   }
 </style>

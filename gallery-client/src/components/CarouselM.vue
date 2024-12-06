@@ -45,10 +45,10 @@ gsap.registerPlugin(Draggable);
     }
     .carousel-item {
         position: relative;
-        height: 24rem;
-        width: 20rem;
-        margin-top: 6rem;
-        margin-right: 7rem;
+        height: 13.2rem;
+        width: 12rem;
+        margin-top: 4rem;
+        margin-right: 4rem;
     }
     .creator {
         border-radius: 100%;
@@ -68,8 +68,8 @@ gsap.registerPlugin(Draggable);
         transform:translate(-1px, -1px);
     }
     .creation {
-        height: 100%;
-        width: 100%;
+        height: 60%;
+        width: 60%;
         overflow: hidden;
         background-size: cover;
         background-position: center;

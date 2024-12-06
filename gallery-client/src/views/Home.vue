@@ -4,7 +4,12 @@
       <HeaderHome/>
       <section class="last-creations">
         <h2 class="md:text-2xl text-xl uppercase text-white">Latest creations</h2>
-        <homeCarousel/>
+        <div class="visibilityD">
+          <homeCarousel/>
+        </div>
+        <div class="visibilityM">
+          <homeCarouselM/>
+        </div>
       </section>
       <section class="text-section" ref="scene1">
         <div data-speed="0.9">
@@ -41,6 +46,7 @@ import gsap from 'gsap';
 import { ref, onMounted, onUnmounted } from 'vue';
 import HeaderHome from '../components/HomeHeader.vue'
 import homeCarousel from '../components/Carousel.vue'
+import homeCarouselM from '../components/CarouselM.vue'
 
 
 const scene1 = ref(null);
@@ -198,8 +204,23 @@ export default {
   .text-paragraph {
     width: 40%;
   }
+
+  .visibilityM {
+    display: none;
+  }
+  
+  .visibilityD {
+    display: block;
+  }
   
   @media screen and (max-width: 768px) {
+    .visibilityM {
+      display: block;
+    }
+    
+    .visibilityD {
+      display: none;
+    }
     .last-creations {
       padding: 4rem 3rem;
     } 

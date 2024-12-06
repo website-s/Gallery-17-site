@@ -32,7 +32,7 @@
                     <RouterLink to="/"><svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 12.375C7.31055 12.375 4.75 9.81445 4.75 6.625C4.75 3.48047 7.31055 0.875 10.5 0.875C13.6445 0.875 16.25 3.48047 16.25 6.625C16.25 9.81445 13.6445 12.375 10.5 12.375ZM12.7461 14.5312C17.0586 14.5312 20.5625 18.0352 20.5625 22.3477C20.5625 23.2012 19.8438 23.875 18.9902 23.875H1.96484C1.11133 23.875 0.4375 23.2012 0.4375 22.3477C0.4375 18.0352 3.89648 14.5312 8.20898 14.5312H12.7461Z"/></svg></RouterLink>
                 </div>
             </div> 
-            <div class="closer"></div>
+            <div ref="closer" class="closer"></div>
         </div>
     </div>
 </template>
@@ -50,13 +50,16 @@ const logo = ref(null);
 const picto = ref(null);
 const menu = ref(null);
 const navClick = ref(null);
+const closer = ref(null);
 
 const menuClick = () => {
         gsap.to(navClick.value, { left: '0vh', duration: 0.5 });
+        gsap.fromTo(closer.value, {opacity: 0}, {opacity: 1, delay: .3,duration: 0.2});
     };
     
 const navCLose = () => {
-    gsap.to(navClick.value, { left: '-120vw', duration: 0.5 });
+    gsap.to(navClick.value, { left: '-120vw', duration: 0.5, delay: .15 });
+    gsap.fromTo(closer.value, {opacity: 1}, {opacity: 0,duration: 0.2});
 };
 
 let observer;
