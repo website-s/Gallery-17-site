@@ -231,7 +231,7 @@ export default {
   
   @media screen and (max-width: 480px) {
     .last-creations {
-      padding: 3rem 2rem;
+      padding: 3rem 2rem 5rem 2rem;
     } 
     .link-container {
       flex-direction: column;

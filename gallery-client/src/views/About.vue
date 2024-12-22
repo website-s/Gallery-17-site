@@ -6,7 +6,7 @@
       </div>
       <div ref="scene1" class="scene scene1">
         <div data-speed="1.3" class="text-container">
-          <h2 ref="scene1H2" class="text-2xl">concept</h2>
+          <h2 ref="scene1H2" class="text-xl md:text-2xl">Mission</h2>
           <div ref="scene1P" class="p-container">
             <p>Gallery17 a pour mission de célébrer la créativité et l’authenticité. Nous offrons une plateforme où chaque talent peut présenter ses œuvres, son univers et son savoir-faire.</p>
             <p>En explorant notre galerie, vous découvrirez des créations exclusives et des univers artistiques uniques, soigneusement sélectionnés pour leur originalité et leur qualité exceptionnelle.</p>
@@ -15,7 +15,7 @@
       </div>
       <div ref="scene2" class="scene scene2">
         <div data-speed="1.3" class="text-container">
-          <h2 ref="scene2H2" class="text-2xl">Philosophie</h2>
+          <h2 ref="scene2H2" class="text-xl md:text-2xl">Vision</h2>
           <div ref="scene2P" class="p-container">
             <p>Chez Gallery17, nous mettons en avant l’authenticité et la diversité artistique. Notre objectif est de donner une tribune aux visions uniques des créateurs, en révélant des récits à travers leurs œuvres.</p>
             <p>Nous sommes convaincus que l’art et le design enrichissent notre façon de voir le monde et stimulent des échanges enrichissants. En soutenant les talents émergents, nous favorisons un environnement où la créativité peut s’épanouir pleinement et librement.</p>
@@ -24,7 +24,7 @@
       </div>
       <div ref="scene3" class="scene scene3">
         <div data-speed="1.3" class="text-container">
-          <h2 ref="scene3H2" class="text-2xl">Collaboration</h2>
+          <h2 ref="scene3H2" class="text-xl md:text-2xl">Valeures</h2>
           <div ref="scene3P" class="p-container">
             <p>La collaboration est un pilier fondamental de Gallery17. Nous accompagnons les créateurs dans la mise en valeur de leurs œuvres tout en leur offrant une visibilité alignée sur leurs objectifs.</p>
             <p>Notre plateforme est conçue comme un espace de synergie et de partage, où chaque collaboration ouvre la porte à de nouvelles expressions artistiques. Ensemble, nous construisons une communauté qui célèbre l’excellence, l’originalité et l’innovation.</p>
@@ -247,12 +247,12 @@ p {
   opacity: 0;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1279px) {
   .text-container {
     width: 60%;
   }
 }
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 768px) {
   .scene {
     background-position: bottom center;
     align-items: start;
@@ -277,4 +277,14 @@ p {
   }
 }
 
+@media screen and (max-width: 480px) {
+  p {
+    font-size: .75rem;
+    margin-bottom: .5rem;
+  }
+
+  .scene {
+    padding-top: 4rem;
+}
+}
 </style>

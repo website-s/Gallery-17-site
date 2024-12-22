@@ -616,6 +616,10 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.mb-9 {
+  margin-bottom: 2.25rem;
+}
+
 .ml-0 {
   margin-left: 0px;
 }
@@ -789,12 +793,6 @@ a:hover {
 @media screen and (max-width: 480px) {
   .text-section {
     padding: 3rem 2rem;
-  }
-}
-
-@media (min-width: 640px) {
-  .sm\:text-2xl {
-    font-size: 2.6rem;
   }
 }
 

@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 /* il faut faire un output pour voir les modifs comme pour tailwind */
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {

@@ -220,6 +220,8 @@ const navCLose = () => {
     .visibility {
         display: block;
     }
-    
+    .logo-nav-click {
+        max-width: 50%;
+    }
     }
 </style>
